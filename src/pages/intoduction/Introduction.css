@@ -1,0 +1,32 @@
+.black-logo {
+  width: 78px;
+  height: 71px;
+  padding: 8px 0 27px 80px;
+}
+.introduction-title {
+  margin-left: 80px;
+  margin-top: 50px;
+}
+.paragraph {
+  width: 599px;
+  height: 230px;
+  padding-left: var(--spacing-inline-xl);
+  margin-bottom: var(--spacing-inset-sm);
+}
+.img1 {
+  background-image: url("../../../src/assets/images/Egypt-tour-guide.jpg");
+  padding: 400px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 800px;
+  bottom: 0
+}
+.btn{
+  position: absolute;
+  top: 600px;
+  transform: translate(500px, 0px)
+}

@@ -1,0 +1,32 @@
+.future-provision {
+  padding-left: 70px;
+}
+.provision-checkbox {
+  display: flex;
+  padding-top: 10px;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 300;
+  font-size: 22px;
+  line-height: 37px;
+  color: #000000;
+}
+.provision-checkbox input[type="checkbox"] {
+  margin-right: 40px;
+}
+
+.provision-checkbox input[type="checkbox"]::after {
+  content: "";
+  display: inline-block;
+  width: 25px;
+  height: 25px;
+  background: #ffffff;
+  border: 1px solid #444444;
+}
+
+.provision-checkbox input[type="checkbox"]:checked::after {
+  content: url("../../../../assets/images/check.jpg");
+}
+.provision-radio-group {
+  margin-left: -135px;
+}

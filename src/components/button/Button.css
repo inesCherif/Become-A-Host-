@@ -1,0 +1,22 @@
+.primary-btn {
+  width: 201.54px;
+  height: 50.17px;
+  background: var(--primarybrand);
+  border: var(--border-width-thin) var(--primarybrand);
+  border-radius: var(--border-radius-sm);
+  color: #ffffff;
+  padding: var(--spacing-squish-sm);
+  cursor: pointer;
+}
+.primary-btn:hover {
+  background: #ffffff;
+  border: var(--border-width-thin) var(--primarybrand);
+  color: var(--primarybrand);
+}
+
+.primary-btn:disabled {
+  background: #bfbfbf;
+  border: var(--border-width-thin) #bfbfbf;
+  color: #ffffff;
+}
+

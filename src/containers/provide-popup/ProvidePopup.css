@@ -1,0 +1,20 @@
+.provide-popup-content{
+  position: absolute;
+  top: 57%;
+  left: 50%;
+}
+.provide-popup-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  padding-left: 120px;
+  padding-right: 120px;
+  padding-top: 40px;
+}
+
+.provide-popup-grid > *:nth-child(5) {
+  grid-column: 1;
+}
+.popup-hidden {
+  display: none;
+}

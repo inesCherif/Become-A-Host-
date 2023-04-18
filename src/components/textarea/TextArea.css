@@ -1,0 +1,26 @@
+.TextArea {
+    position: relative;
+  }
+.TextArea textarea {
+  box-sizing: border-box;
+  width: 687px;
+  height: 236px;
+  background: #ffffff;
+  border: 1px solid #686868;
+  border-radius: 10px;
+  padding: 20px 15px;
+  resize: none;
+}
+.TextArea::placeholder {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 300;
+  font-size: 20px;
+  line-height: 23px;
+  color: #686868;
+}
+.remaining-chars-textarea{
+  position: absolute;
+  bottom: 10px;
+  right: 320px;
+}

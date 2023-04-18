@@ -1,0 +1,24 @@
+.my-photos-content {
+    margin-top: 70px;
+    margin-left: 115px;
+}
+
+.add-photo-title {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 30px;
+  color: #000000;
+  margin-bottom: 0px;
+
+}
+.add-photo-explanation {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 30px;
+  color: #000000;
+  margin-top: 0px;
+}

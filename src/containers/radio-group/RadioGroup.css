@@ -1,0 +1,12 @@
+.radio-group {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: start;
+  margin-top: 50px;
+  margin-left: 140px;
+  /* padding-right: 400px; */
+}
+.radio-group label{
+  margin-bottom: 10px;
+}

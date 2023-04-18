@@ -1,0 +1,28 @@
+.radio-position {
+  margin-right: 300px;
+}
+.policies-title {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 23px;
+  color: #000000;
+}
+.box-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 30px;
+  margin-bottom: -50px;
+}
+.box-container > :nth-child(2) {
+  margin-top: 25px;
+}
+.final-part{
+  display: flex;
+  flex-direction: column;
+  gap: 80px;
+  align-items: center;
+  margin-left: -250px;
+}

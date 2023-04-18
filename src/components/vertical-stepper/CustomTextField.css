@@ -1,0 +1,12 @@
+.custom-text-field-container {
+  display: flex;
+  flex-direction: column;
+}
+.custom-text-field-input {
+  padding: 8px;
+  background: #ffffff;
+  border: 1px solid #686868;
+  border-radius: 10px;
+  width: 687px;
+  height: 39px;
+}

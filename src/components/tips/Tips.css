@@ -1,0 +1,16 @@
+.tips {
+  padding-left: var(--spacing-stack-xxxs);
+  padding-right: var(--spacing-stack-xxxs);
+  padding-bottom: var(--spacing-stack-xxxs);
+  width: 726px;
+  height: auto;
+  background: #f1f1f1;
+  border-radius: var(--border-radius-sm);
+}
+.tips-title {
+  padding-top: 16px;
+  font-weight: 700;
+}
+.test{
+  white-space: pre;
+}

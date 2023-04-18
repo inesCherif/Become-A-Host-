@@ -1,0 +1,13 @@
+.avatar-container {
+  margin-left: 250px;
+  display: flex;
+  flex-flow: column;
+}
+.photo-advice {
+  font-weight: 300;
+  margin-left: 185px;
+  padding-bottom: 40px;
+}
+.photo-advice-warning {
+  font-weight: 500;
+}

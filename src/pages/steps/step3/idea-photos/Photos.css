@@ -1,0 +1,40 @@
+.photo-tips {
+  margin-left: 150px;
+}
+.photos-tips-title {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 35px;
+  line-height: 41px;
+  color: #000000;
+}
+.photos-tips-subtitle {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 23px;
+  letter-spacing: -0.231818px;
+  color: #000000;
+  margin-top: 30px;
+}
+.photos-tips-content {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  margin-right: 200px;
+}
+.images-tips-type {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 23px;
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  letter-spacing: -0.231818px;
+  color: #000000;
+  margin-left: 20px;
+}

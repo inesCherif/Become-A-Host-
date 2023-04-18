@@ -1,0 +1,31 @@
+.popup-cell {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  text-align: center;
+  background: #ffffff;
+  /* background: #98bbad; */
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+  height: 53px;
+  cursor: pointer;
+}
+
+.theme-icon {
+  width: 40px;
+  height: 35px;
+  margin-right: 10px;
+}
+.theme-label {
+  margin: 0;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 300;
+  font-size: 22px;
+  line-height: 26px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: #444444;
+}

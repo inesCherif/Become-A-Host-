@@ -1,0 +1,72 @@
+.provide-popup {
+  height: auto;
+  min-height: 330px;
+  z-index: 9999;
+  position: absolute;
+  top: 57%;
+  left: 50%;
+}
+.checkbox-grid {
+  display: flex;
+  flex-direction: column;
+  padding-top: 10px;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 300;
+  font-size: 22px;
+  line-height: 37px;
+  color: #000000;
+  padding-left: 200px;
+}
+.checkbox-grid label {
+  display: flex;
+}
+.checkbox-grid input[type="checkbox"] {
+  margin-right: 20px;
+}
+
+.checkbox-grid input[type="checkbox"]::after {
+  content: "";
+  display: inline-block;
+  width: 25px;
+  height: 25px;
+  background: #ffffff;
+  border: 1px solid #444444;
+}
+
+.checkbox-grid input[type="checkbox"]:checked::after {
+  content: url("../../assets/images/check.jpg");
+}
+
+.done-button {
+  position: absolute;
+  bottom: 20px;
+  right: 30px;
+  border: none;
+  background-color: var(--primarybrand);
+  width: 126px;
+  height: 34px;
+  cursor: pointer;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 15px;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 23px;
+  color: #ffffff;
+}
+.done-button:disabled {
+  width: 126px;
+  height: 34px;
+  background: #c4c4c4;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 15px;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 23px;
+  color: #ffffff;
+  cursor: pointer;
+}

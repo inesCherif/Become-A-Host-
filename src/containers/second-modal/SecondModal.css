@@ -1,0 +1,4 @@
+.second-modal {
+  transform: translate(-50%, -55%);
+  z-index: 1000;
+}

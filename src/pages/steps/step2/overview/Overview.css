@@ -1,0 +1,12 @@
+.overview-txt1 {
+  margin-top: 80px;
+  margin-bottom: 20px;
+}
+.overview-txt2 {
+  padding-top: 30px;
+  padding-left: 90px;
+}
+.overview-subtitle {
+  color: var(--secondarybrand);
+  font-weight: 700;
+}

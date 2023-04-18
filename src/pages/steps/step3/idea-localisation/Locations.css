@@ -1,0 +1,56 @@
+.location-form {
+  margin-left: 80px;
+}
+.custom-selector {
+  width: 485px;
+  height: 55px;
+  padding: 10px;
+  left: 580px;
+  top: 794px;
+  background: none;
+  border: 1px solid #686868;
+  border-radius: 10px;
+  margin-left: 40px;
+}
+.custom-input-country-text {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 300;
+  font-size: 20px;
+  line-height: 23px;
+  color: #686868;
+  position: absolute;
+  margin-left: 170px;
+  margin-top: 15px;
+  z-index: -1;
+}
+.custom-input {
+  width: 464px;
+  height: 30px;
+  padding: 10px;
+  left: 580px;
+  top: 794px;
+  background: #ffffff;
+  border: 1px solid #686868;
+  border-radius: 10px;
+  margin-left: 40px;
+}
+.custom-input::placeholder {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 300;
+  font-size: 20px;
+  line-height: 23px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: #686868;
+}
+.custom-label {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 37px;
+  color: #000000;
+}

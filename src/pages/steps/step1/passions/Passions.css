@@ -1,0 +1,10 @@
+.textarea-description {
+  width: 735px;
+  background: #ffffff;
+  border: 1px solid var(--form-title);
+  box-shadow: 0px 2px 1px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  padding-left: 10px;
+  padding-top: 10px;
+  resize: none;
+}

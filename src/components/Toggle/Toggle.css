@@ -1,0 +1,40 @@
+.toogle-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 25px;
+}
+.toogle-container input[type="checkbox"] {
+  visibility: hidden;
+}
+.checkbox-example {
+  width: 72px;
+  height: 40px;
+  background: #ecf1f4;
+  margin: 20px 10px;
+  position: relative;
+  box-shadow: inset 0px 2px 2px -1px rgba(74, 74, 104, 0.1);
+  border-radius: 24px;
+}
+.checkbox-example label {
+  display: block;
+  height: 35px;
+  width: 35px;
+  top: 3px;
+  left: -5px;
+  border-radius: 50%;
+  transition: all 0.5s ease;
+  cursor: pointer;
+  position: absolute;
+  background: #ffffff;
+  margin-left: 8px;
+  margin-right: 80px;
+  box-shadow: 0px 5.5px 5px -3px rgba(14, 14, 44, 0.2),
+    inset 0px -1px 0px rgba(14, 14, 44, 0.4);
+}
+.checkbox-example input[type="checkbox"]:checked + label {
+  left: 27px;
+}
+.checkbox-example.red-background {
+  background-color: #f15928;
+}

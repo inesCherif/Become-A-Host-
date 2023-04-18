@@ -1,0 +1,12 @@
+/* .test{
+    display: flex;
+    justify-content: 'center';
+    align-items: 'center';
+} */
+
+.css-6lpr0y-MuiSvgIcon-root-MuiStepIcon-root.Mui-active {
+  color: #979797 !important;
+}
+.css-6lpr0y-MuiSvgIcon-root-MuiStepIcon-root.Mui-completed {
+    color: #979797 !important;
+}

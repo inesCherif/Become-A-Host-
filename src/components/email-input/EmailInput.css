@@ -1,0 +1,46 @@
+input[type="email"]:active {
+  background: #ffffff;
+  border: 1px solid var(--secondarybrand);
+  box-shadow: 0px 0px 0px 4px rgba(75, 77, 237, 0.2);
+  border-radius: var(--border-radius-sm);
+}
+
+.valid {
+  background: #ffffff;
+  border: 1px solid #31d0aa;
+  box-shadow: 0px 0px 0px 4px rgba(49, 208, 170, 0.2);
+  border-radius: var(--border-radius-sm);
+}
+
+.invalid {
+  background: #ffffff;
+  border: 1px solid var(--primarybrand);
+  box-shadow: 0px 0px 0px 4px rgba(237, 75, 158, 0.2);
+  border-radius: var(--border-radius-sm);
+}
+.done {
+  color: #31d0aa;
+}
+.error {
+  color: var(--primarybrand);
+}
+
+.email {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: row;
+}
+.valid-email-icon {
+  color: #31d0aa;
+  position: absolute;
+  font-size: 30px;
+  margin-top: 10px;
+  margin-left: 300px;
+}
+.invalid-email-icon {
+  color: #ffbc20;
+  position: absolute;
+  margin-top: 10px;
+  margin-left: 300px;
+}

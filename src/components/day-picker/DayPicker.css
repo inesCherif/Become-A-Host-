@@ -1,0 +1,40 @@
+.day-picker-container {
+  display: flex;
+}
+
+.day-picker-list {
+  list-style-type: none;
+  padding: 0;
+  display: flex;
+}
+
+.day-picker-item {
+  width: 45px;
+  height: 45px;
+  margin-right: 7px;
+  border: 1px solid #686868;
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 50%;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 23px;
+  color: #000000;
+}
+
+.day-picker-item:hover {
+  background-color: #eee;
+}
+
+.selected {
+  background: linear-gradient(180deg, #ffaf20 0%, #fd996b 100%);
+  border: 1px solid #ffaf20;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  color: #ffffff;
+}

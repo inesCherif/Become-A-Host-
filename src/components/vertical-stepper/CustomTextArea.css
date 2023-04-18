@@ -1,0 +1,23 @@
+.custom-text-area-container {
+  display: flex;
+  flex-direction: column;
+}
+.custom-text-area-input {
+  font-family: "Roboto";
+  padding: 8px;
+  width: 687px;
+  height: 106px;
+  background: #ffffff;
+  border: 1px solid #686868;
+  border-radius: 10px;
+  resize: none;
+  margin-left: 5px;
+}
+.custom-text-area-input::placeholder {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 23px;
+  color: #686868;
+}

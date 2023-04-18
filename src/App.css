@@ -1,38 +1,162 @@
-.App {
-  text-align: center;
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap");
+:root {
+  /* colors scheme */
+  --primarybrand: #ffbc20;
+  --secondarybrand: #10455b;
+  --form-title: #686868;
+  --tertiarybrand: #f15928;
+  --dark: #0e0e2c;
+  --success: #31d0aa;
+  --text: #4a4a68;
+  --subtletext: #8c8ca1;
+  --accent: #ecf1f4;
+  --light: #fafcfe;
+
+  /* Box Shadow Levels */
+  --shadow-level-1: 0px 4px 16px rgba(0, 0, 0, 0.08);
+  --shadow-level-2: 0px 8px 24px rgba(0, 0, 0, 0.08);
+  --shadow-level-3: 0px 16px 32px rgba(0, 0, 0, 0.08);
+  --shadow-level-4: 0px 16px 48px rgba(0, 0, 0, 0.08);
+
+  /* Border Radius */
+  --border-radius-none: 0px;
+  --border-radius-sm: 8px;
+  --border-radius-md: 16px;
+  --border-radius-lg: 24px;
+  --border-radius-pill: 500px;
+  --border-radius-circular: 50%;
+
+  /* Border Widths */
+  --border-width-none: 0px;
+  --border-width-hairline: 1px solid;
+  --border-width-thin: 2px solid;
+  --border-width-thick: 4px solid;
+  --border-width-heavy: 8px solid;
+
+  /* Opacity Levels */
+  --opacity-level-semiopaque: 0.8;
+  --opacity-level-intense: 0.64;
+  --opacity-level-medius: 0.32;
+  --opacity-level-light: 0.16;
+  --opacity-level-semitrasparent: 0.08;
+
+  /* Spacing Stack */
+  --spacing-stack-quarck: 4px;
+  --spacing-stack-nano: 8px;
+  --spacing-stack-xxxs: 16px;
+  --spacing-stack-xxs: 24px;
+  --spacing-stack-xs: 32px;
+  --spacing-stack-sm: 40px;
+  --spacing-stack-md: 48px;
+  --spacing-stack-lg: 56px;
+  --spacing-stack-xl: 64px;
+  --spacing-stack-xxl: 80px;
+  --spacing-stack-xxxl: 120px;
+  --spacing-stack-huge: 160px;
+  --spacing-stack-giant: 200px;
+
+  /* spacing squish */
+  --spacing-squish-quarck: 4px 8px;
+  --spacing-squish-nano: 8px 16px;
+  --spacing-squish-xs: 16px 24px;
+  --spacing-squish-sm: 16px 32px;
+
+  /* spacing inset */
+  --spacing-inset-quarck: 4px;
+  --spacing-inset-nano: 8px;
+  --spacing-inset-xs: 16px;
+  --spacing-inset-sm: 24px;
+  --spacing-inset-md: 32px;
+  --spacing-inset-lg: 40px;
+
+  /* Spacing Inline */
+  --spacing-inline-quarck: 4px;
+  --spacing-inline-nano: 8px;
+  --spacing-inline-xxxs: 16px;
+  --spacing-inline-xxs: 24px;
+  --spacing-inline-xs: 32px;
+  --spacing-inline-sm: 40px;
+  --spacing-inline-md: 48px;
+  --spacing-inline-lg: 64px;
+  --spacing-inline-xl: 80px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* type scale */
+.header2 {
+  font-family: "Roboto";
+  font-weight: bold;
+  font-size: 40px;
+  letter-spacing: -2%;
+}
+.header3 {
+  font-family: "Roboto";
+  font-weight: bold;
+  font-size: 24px;
+  letter-spacing: -2%;
+}
+.content-title {
+  font-family: "Roboto";
+  font-weight: bold;
+  font-size: 40px;
+  letter-spacing: -2%;
+  font-size: 32px;
+  margin-bottom: var(--spacing-stack-sm);
+  color: var(--form-title);
+}
+.body {
+  font-family: "Roboto";
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 140%;
+}
+.button-text {
+  font-family: "Roboto";
+  font-weight: bold;
+  font-size: 16px;
+  letter-spacing: 3%;
+}
+.bold-text {
+  font-family: "Roboto";
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 19px;
+}
+.type16 {
+  font-family: "Roboto";
+  font-weight: 400;
+  font-size: 16px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+/* web grid */
+.web-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-auto-rows: minmax(auto, auto);
+  grid-gap: 16px;
+  margin-left: 75px;
+  margin-right: 75px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+/* mobile grid */
+.mobile-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: minmax(auto, auto);
+  grid-gap: 16px;
 }
 
-.App-link {
-  color: #61dafb;
+/* content of each page */
+.desktop-content {
+  width: 77%;
+  margin-left: 300px;
+  padding: 20px;
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.content-position{
+  padding-left: 150px;
+  padding-bottom: 50px;
+}
+.btn-position {
+  position: absolute;
+  top: auto;
+  transform: translate(750px, 0px);
 }

@@ -1,0 +1,21 @@
+.theme-selector-header {
+  margin-bottom: 8px;
+  margin-top: 35px;
+  margin-left: 20px;
+}
+
+.theme-selector-title {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 25px;
+  line-height: 29px;
+  color: #000000;
+}
+.second-theme-selector-header{
+  margin-top: 10px !important;
+}
+.theme-btn-position{
+  padding-top: 40px;
+  padding-bottom: 60px;
+}

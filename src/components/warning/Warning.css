@@ -1,0 +1,23 @@
+.warning-container {
+  width: 566px;
+  height: auto;
+  border: 1px solid #686868;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+  padding: 20px;
+  align-items: center;
+}
+.warning-text {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 25px;
+  color: #000000;
+}
+.warning-image{
+    width: 90px;
+    height: 80px;
+}

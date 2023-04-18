@@ -1,0 +1,50 @@
+.bold {
+  font-weight: 600;
+}
+.select-container {
+  position: relative;
+  margin-bottom: 50px;
+}
+.select {
+  box-sizing: border-box;
+  width: 687px;
+  height: 67px;
+  background: #ffffff;
+  border: 1px solid #686868;
+  border-radius: 10px;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 300;
+  font-size: 20px;
+  line-height: 23px;
+  color: #686868;
+  padding-top: 21px;
+  padding-left: 20px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: calc(100% - 20px) center;
+  background-size: 20px;
+}
+.select::placeholder {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 300;
+  font-size: 20px;
+  line-height: 23px;
+  color: #686868;
+}
+.select-label {
+  position: absolute;
+  top: 55%;
+  transform: translateY(-80%);
+  left: 20px;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 300;
+  font-size: 20px;
+  line-height: 23px;
+  color: #686868;
+}

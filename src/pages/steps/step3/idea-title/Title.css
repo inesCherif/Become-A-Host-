@@ -1,0 +1,21 @@
+.idea-content {
+  margin-top: 50px;
+  margin-bottom: 90px;
+  margin-left: 15px;
+}
+.idea-title {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 25px;
+  color: #000000;
+}
+.idea-subtitle {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 300;
+  font-size: 22px;
+  line-height: 29px;
+  color: #000000;
+}
