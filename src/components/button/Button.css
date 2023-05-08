@@ -5,7 +5,7 @@
   border: var(--border-width-thin) var(--primarybrand);
   border-radius: var(--border-radius-sm);
   color: #ffffff;
-  padding: var(--spacing-squish-sm);
+  /* padding: var(--spacing-squish-sm); */
   cursor: pointer;
 }
 .primary-btn:hover {

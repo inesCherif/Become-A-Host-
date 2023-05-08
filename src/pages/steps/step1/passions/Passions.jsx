@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./Passions.css";
 import Navbar from "../../../../layouts/navbar/Navbar";
 import { Link } from "react-router-dom";
@@ -6,9 +6,47 @@ import Button from "../../../../components/button/Button";
 import useActiveNav from "../../../../hooks/useActiveNav";
 import Tips from "../../../../components/tips/Tips";
 import InputField from "../../../../components/input-field/InputField";
+import { useDispatch, useSelector } from "react-redux";
+import { updatePassionsInfo } from "../../../../redux/actions/step1-actions/updatePassionsInfo";
+import { auth, db } from "../../../../firebase";
+import passionsDataToFirestore from "../../../../redux/actions/step1-actions/passionsToFirestore";
 
 const Passions = () => {
-  const { selectedNavItem, handleContinueClick } = useActiveNav("passions", "");
+  const [state, setState] = useState({
+    userPassions: "",
+    myFavoriteCityFeature: "",
+    selfDescription: "",
+  });
+
+  const dispatch = useDispatch();
+  const { userPassions, myFavoriteCityFeature,selfDescription } = state;
+  const handleInputChange = (event) => {
+    let { name, value } = event.target;
+    setState({ ...state, [name]: value }); // update the form data in state
+
+    dispatch(updatePassionsInfo(userPassions, myFavoriteCityFeature,selfDescription));
+  };
+  const { selectedNavItem, handleContinueClick } = useActiveNav(
+    "passions",
+    ""
+  );
+  const passions = useSelector(state => state.passions);
+  const handleContinue = () => {
+    passionsDataToFirestore(dispatch, passions);
+  };
+
+  // fetch data from firebase and display it in inputs
+  useEffect(() => {
+    const fetchData = async () => {
+      const userId = auth.currentUser.uid;
+      const applicationRef = db.collection("applications").doc(userId);
+      const doc = await applicationRef.get();
+      if (doc.exists && doc.data().passions) {
+        setState(doc.data().passions);
+      }
+    };
+    fetchData();
+  }, []);
 
   return (
     <>
@@ -26,18 +64,26 @@ const Passions = () => {
                 <tr>
                   <td>
                     <InputField
-                      inputId="input1"
+                      inputId="passions-info"
                       labelText="What are you passionate about ?"
                       className="third-input"
+                      name="userPassions"
+                      htmlFor="userPassions"
+                      value={userPassions}
+                      onChange={handleInputChange}
                     />
                   </td>
                 </tr>
                 <tr>
                   <td>
                     <InputField
-                      inputId="input3"
+                      inputId="passions-info"
                       labelText="what do you love most about your city ?"
                       className="third-input"
+                      name="myFavoriteCityFeature"
+                      htmlFor="myFavoriteCityFeature"
+                      value={myFavoriteCityFeature}
+                      onChange={handleInputChange}
                     />
                   </td>
                 </tr>
@@ -48,11 +94,13 @@ const Passions = () => {
                     </label>
                     <br />
                     <textarea
-                      name="description"
-                      id="description"
+                      name="selfDescription"
+                      id="passions-info"
                       cols="30"
                       rows="10"
                       className="textarea-description"
+                      value={selfDescription}
+                      onChange={handleInputChange}
                     ></textarea>
                   </td>
                 </tr>
@@ -62,7 +110,7 @@ const Passions = () => {
 
           <span className="btn-position">
             <Link to="/overview">
-              <Button onClick={handleContinueClick} />
+              <Button onClick={() => { handleContinueClick(); handleContinue(); }} />
             </Link>
           </span>
         </div>

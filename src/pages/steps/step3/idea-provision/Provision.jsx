@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./Provision.css";
 import Navbar from "../../../../layouts/navbar/Navbar";
 import { Link } from "react-router-dom";
@@ -10,12 +10,59 @@ import ProvidePopup from "../../../../containers/provide-popup/ProvidePopup";
 import Warning from "../../../../components/warning/Warning";
 import RadioGroup from "../../../../containers/radio-group/RadioGroup";
 import Radio from "../../../../components/radio/Radio";
+import { useDispatch, useSelector } from "react-redux";
+import provisionDataToFirestore from "../../../../redux/actions/step3-actions/provisonDataToFirestore";
+import { auth, db } from "../../../../firebase";
+import {
+  updateActivityTransport,
+  updatecarProblems,
+  updatehostProvision,
+} from "../../../../redux/actions/step3-actions/provisionActions";
 
 const Provision = () => {
+  const [hostProvision, sethostProvision] = useState("I am providing things");
+  const [activityTransport, setActivityTransport] = useState();
+  const [carProblems, setcarProblems] = useState();
+  const dispatch = useDispatch();
+
   const { selectedNavItem, handleContinueClick } = useActiveNav(
     "provide",
     "requirements"
   );
+  const provision = useSelector((state) => state.provision);
+  const handleContinue = () => {
+    provisionDataToFirestore(dispatch, provision);
+  };
+
+  // fetch data from firebase and display it in Radio
+  useEffect(() => {
+    const fetchData = async () => {
+      const userId = auth.currentUser.uid;
+      const applicationRef = db.collection("applications").doc(userId);
+      const doc = await applicationRef.get();
+      if (doc.exists && doc.data().provision) {
+        // extract the activityTransport and carProblems fields from the provision object
+        const {
+          activityTransport: fetchedactivityTransport,
+          carProblems: fetchedcarProblems,
+          hostProvision: fetchedHostProvision,
+        } = doc.data().provision;
+        if (fetchedactivityTransport !== undefined) {
+          setActivityTransport(fetchedactivityTransport);
+          dispatch(updateActivityTransport(fetchedactivityTransport));
+        }
+        if (fetchedcarProblems !== undefined) {
+          setcarProblems(fetchedcarProblems);
+          dispatch(updatecarProblems(fetchedcarProblems));
+        }
+        if (fetchedHostProvision !== undefined) {
+          sethostProvision(fetchedHostProvision);
+          dispatch(updatehostProvision(fetchedHostProvision));
+        }
+      }
+    };
+    fetchData();
+  }, []);
 
   return (
     <>
@@ -58,7 +105,36 @@ const Provision = () => {
             </p>
             <div className="future-provision">
               <label className="provision-checkbox">
-                <input type="checkbox" />I am not providing anything
+                {/*
+                
+                can't uncheck the box
+                <input
+                  type="checkbox"
+                  value="I am not providing anything"
+                  onChange={(e) => {
+                    sethostProvision(e.target.value);
+                    dispatch(updatehostProvision(e.target.value));
+                  }}
+                  checked={
+                    hostProvision ===
+                    "I am not providing anything"
+                  }
+                /> */}
+                <input
+                  type="checkbox"
+                  value="I am not providing anything"
+                  onChange={(e) => {
+                    if (e.target.checked) {
+                      sethostProvision(e.target.value);
+                      dispatch(updatehostProvision(e.target.value));
+                    } else {
+                      sethostProvision("I am providing things");
+                      dispatch(updatehostProvision("I am providing things"));
+                    }
+                  }}
+                  checked={hostProvision === "I am not providing anything"}
+                />
+                I am not providing anything
               </label>
               <br />
 
@@ -72,24 +148,65 @@ const Provision = () => {
                 >
                   <Radio
                     id="radio1"
-                    value="yes"
+                    value="Driving (Car, ATV, Motorized Scooter, etc.)"
                     label="Driving (Car, ATV, Motorized Scooter, etc.)"
+                    onChange={(e) => {
+                      setActivityTransport(e.target.value);
+                      dispatch(updateActivityTransport(e.target.value));
+                    }}
+                    checked={
+                      activityTransport ===
+                      "Driving (Car, ATV, Motorized Scooter, etc.)"
+                    }
                   />
                   <Radio
                     id="radio2"
-                    value="no"
+                    value="Boating (Motorized boat, sailboat, waterski, parasailing, towed tubing etc.)"
                     label="Boating (Motorized boat, sailboat, waterski, parasailing, towed tubing etc.)"
+                    onChange={(e) => {
+                      setActivityTransport(e.target.value);
+                      dispatch(updateActivityTransport(e.target.value));
+                    }}
+                    checked={
+                      activityTransport ===
+                      "Boating (Motorized boat, sailboat, waterski, parasailing, towed tubing etc.)"
+                    }
                   />
-                  <Radio id="radio3" value="not-sure" label="Biking" />
+                  <Radio
+                    id="radio3"
+                    value="Biking"
+                    label="Biking"
+                    onChange={(e) => {
+                      setActivityTransport(e.target.value);
+                      dispatch(updateActivityTransport(e.target.value));
+                    }}
+                    checked={activityTransport === "Biking"}
+                  />
                   <Radio
                     id="radio4"
-                    value="not-sure"
+                    value="Flying (Plane, Helicopter, or Hot Air Balloon)"
                     label="Flying (Plane, Helicopter, or Hot Air Balloon)"
+                    onChange={(e) => {
+                      setActivityTransport(e.target.value);
+                      dispatch(updateActivityTransport(e.target.value));
+                    }}
+                    checked={
+                      activityTransport ===
+                      "Flying (Plane, Helicopter, or Hot Air Balloon)"
+                    }
                   />
                   <Radio
                     id="radio5"
-                    value="not-sure"
+                    value="My experience does not include any of these activities"
                     label="My experience does not include any of these activities"
+                    onChange={(e) => {
+                      setActivityTransport(e.target.value);
+                      dispatch(updateActivityTransport(e.target.value));
+                    }}
+                    checked={
+                      activityTransport ===
+                      "My experience does not include any of these activities"
+                    }
                   />
                 </RadioGroup>
               </div>
@@ -99,22 +216,46 @@ const Provision = () => {
               <div className="provision-radio-group">
                 <RadioGroup
                   name="activity2"
-                  label="Who will be operating the vehicle when ...................?"
+                  label="Who will be operating the vehicle when it's broken down or experiencing any other issues?"
                 >
                   <Radio
                     id="radio6"
-                    value="yes"
+                    value="I will be personally operating the vehicle"
                     label="I will be personally operating the vehicle"
+                    onChange={(e) => {
+                      setcarProblems(e.target.value);
+                      dispatch(updatecarProblems(e.target.value));
+                    }}
+                    checked={
+                      carProblems ===
+                      "I will be personally operating the vehicle"
+                    }
                   />
                   <Radio
                     id="radio7"
-                    value="no"
+                    value="My team and I will provide a vehicle for the guests to operate"
                     label="My team and I will provide a vehicle for the guests to operate"
+                    onChange={(e) => {
+                      setcarProblems(e.target.value);
+                      dispatch(updatecarProblems(e.target.value));
+                    }}
+                    checked={
+                      carProblems ===
+                      "My team and I will provide a vehicle for the guests to operate"
+                    }
                   />
                   <Radio
                     id="radio8"
-                    value="not-sure"
+                    value="I will be transporting guests via public transportation or a third-party licensed operator"
                     label="I will be transporting guests via public transportation or a third-party licensed operator"
+                    onChange={(e) => {
+                      setcarProblems(e.target.value);
+                      dispatch(updatecarProblems(e.target.value));
+                    }}
+                    checked={
+                      carProblems ===
+                      "I will be transporting guests via public transportation or a third-party licensed operator"
+                    }
                   />
                 </RadioGroup>
               </div>
@@ -122,7 +263,12 @@ const Provision = () => {
           </div>
           <span className="btn-position">
             <Link to="/requirements">
-              <Button onClick={handleContinueClick} />
+              <Button
+                onClick={() => {
+                  handleContinueClick();
+                  handleContinue();
+                }}
+              />
             </Link>
           </span>
         </div>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./Title.css";
 import Navbar from "../../../../layouts/navbar/Navbar";
 import { Link } from "react-router-dom";
@@ -6,9 +6,17 @@ import Button from "../../../../components/button/Button";
 import useActiveNav from "../../../../hooks/useActiveNav";
 import Tips from "../../../../components/tips/Tips";
 import TextInput from "../../../../components/word-limit-input/TextInput";
+import { useDispatch, useSelector } from "react-redux";
+import titleToFirestore from "../../../../redux/actions/step3-actions/titleToFirestore"
+import { auth, db } from "../../../../firebase";
 
 const Title = () => {
   const { selectedNavItem, handleContinueClick } = useActiveNav("title", "do");
+  const title = useSelector((state) => state.title);
+  const dispatch = useDispatch();
+  const handleContinue = async () => {
+    titleToFirestore(dispatch, title);
+  };
 
   return (
     <>
@@ -31,12 +39,12 @@ const Title = () => {
                 Make it short, descriptive, and exciting.
               </span>
             </p>
-            <TextInput maxLength={40}/>
+            <TextInput maxLength={40} />
           </div>
 
           <span className="btn-position">
             <Link to="/do">
-              <Button onClick={handleContinueClick} />
+              <Button onClick={() => { handleContinueClick(); handleContinue(); }} />
             </Link>
           </span>
         </div>

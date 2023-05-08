@@ -1,0 +1,11 @@
+import { auth } from '../../../../firebase';
+const userId = auth.currentUser.uid;
+
+<p>{userId}</p>
+
+
+
+// check store
+import { useSelector } from 'react-redux';
+const expertise = useSelector(state => state.expertise);
+console.log(counter)

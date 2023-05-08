@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Locations.css";
 import Navbar from "../../../../layouts/navbar/Navbar";
 import { Link } from "react-router-dom";
@@ -8,27 +8,87 @@ import Tips from "../../../../components/tips/Tips";
 import { CountryDropdown, RegionDropdown } from "react-country-region-selector";
 import ThemeSelector from "../../../../components/theme/ThemeSelector";
 import LocationModal from "../../../../components/location-popup/LocationModal";
-
+import { useDispatch, useSelector } from "react-redux";
+import {
+  updateCity,
+  updateCountry,
+  updateRegion,
+  updateStreetAddress,
+  updateZipCode,
+} from "../../../../redux/actions/step3-actions/locationsActions";
+import locationsToFirestore from "../../../../redux/actions/step3-actions/locationsToFirebase";
+import { auth, db } from "../../../../firebase";
 
 const Locations = () => {
   const { selectedNavItem, handleContinueClick } = useActiveNav(
     "locations",
     "photos"
   );
-
+  const meetingLocation = useSelector((state) => state.meetingLocation);
+  const handleContinue = () => {
+    locationsToFirestore(dispatch, meetingLocation);
+  };
   const [country, setCountry] = useState("");
   const [region, setRegion] = useState("");
+  const [streetAddress, setStreetAddress] = useState("");
+  const [city, setCity] = useState("");
+  const [zipCode, setzipCode] = useState("");
 
+  const dispatch = useDispatch();
   const selectCountry = (val) => {
     setCountry(val);
     setShowCountryText(false); // Hide the <span> when a country is selected
-  };
 
+    dispatch(updateCountry(val));
+  };
   const selectRegion = (val) => {
     setRegion(val);
+    dispatch(updateRegion(val));
   };
-
   const [showCountryText, setShowCountryText] = useState(true);
+
+
+  // fetch data from firebase and display it in Radio
+  useEffect(() => {
+    const fetchData = async () => {
+      const userId = auth.currentUser.uid;
+      const applicationRef = db.collection("applications").doc(userId);
+      const doc = await applicationRef.get();
+      if (doc.exists && doc.data().meetingLocation) {
+        const {
+          country: fetchedcountry,
+          region: fetchedregion,
+          streetAddress: fetchedstreetAddress,
+          city: fetchedcity,
+          zipCode: fetchedzipCode,
+        } = doc.data().meetingLocation;
+        if (fetchedstreetAddress !== undefined) {
+          setStreetAddress(fetchedstreetAddress);
+          dispatch(updateStreetAddress(fetchedstreetAddress));
+        }
+        if (fetchedcity !== undefined) {
+          setCity(fetchedcity);
+          dispatch(updateCity(fetchedcity));
+        }
+        if (fetchedzipCode !== undefined) {
+          setzipCode(fetchedzipCode);
+          dispatch(updateZipCode(fetchedzipCode));
+        }
+
+        if (fetchedcountry !== undefined) {
+          setShowCountryText(false)
+          setCountry(fetchedcountry);
+          dispatch(updateCountry(fetchedcountry));
+        }
+
+        if (fetchedregion !== undefined) {
+          setRegion(fetchedregion);
+          dispatch(updateRegion(fetchedregion));
+        }
+      }
+    };
+    fetchData();
+  }, []);
 
   return (
     <>
@@ -59,7 +119,7 @@ const Locations = () => {
                   <tr>
                     <td>
                       <label htmlFor="Coutry" className="custom-label">
-                        Coutry / region
+                        Coutry / state
                       </label>
                       <br />
                       {showCountryText && ( // Render the <span> only if showCountryText is true
@@ -80,7 +140,7 @@ const Locations = () => {
                   <tr>
                     <td>
                       <label htmlFor="City" className="custom-label">
-                        City
+                        Region
                       </label>
                       <br />
 
@@ -104,8 +164,13 @@ const Locations = () => {
                       <input
                         type="text"
                         className="custom-input"
-                        name="street"
+                        name="streetAddress"
                         placeholder="House name/number + street/road"
+                        value={streetAddress}
+                        onChange={(e) => {
+                          setStreetAddress(e.target.value);
+                          dispatch(updateStreetAddress(e.target.value));
+                        }}
                       />
                     </td>
                   </tr>
@@ -113,13 +178,18 @@ const Locations = () => {
                   <tr>
                     <td>
                       <label htmlFor="state" className="custom-label">
-                        state
+                        City
                       </label>
                       <br />
                       <input
                         type="text"
                         className="custom-input"
-                        name="state"
+                        name="city"
+                        value={city}
+                        onChange={(e) => {
+                          setCity(e.target.value);
+                          dispatch(updateCity(e.target.value));
+                        }}
                       />
                     </td>
                   </tr>
@@ -130,7 +200,16 @@ const Locations = () => {
                         ZIP code
                       </label>
                       <br />
-                      <input type="text" className="custom-input" name="ZIP" />
+                      <input
+                        type="text"
+                        className="custom-input"
+                        name="zipCode"
+                        value={zipCode}
+                        onChange={(e) => {
+                          setzipCode(e.target.value);
+                          dispatch(updateZipCode(e.target.value));
+                        }}
+                      />
                     </td>
                   </tr>
                 </table>
@@ -141,21 +220,27 @@ const Locations = () => {
             <br />
 
             <p>
-              <span className="idea-title">Where will everything take place?</span>
+              <span className="idea-title">
+                Where will everything take place?
+              </span>
               <br />
               <span className="idea-subtitle">
-              Choose up to three locations for your experience.
+                Choose up to three locations for your experience.
               </span>
             </p>
-            <ThemeSelector text="&nbsp;&nbsp;&nbsp;&nbsp;Select a location" PopupComponent={LocationModal} />
-
-
-
-
+            <ThemeSelector
+              text="&nbsp;&nbsp;&nbsp;&nbsp;Select a location"
+              PopupComponent={LocationModal}
+            />
           </div>
           <span className="btn-position">
             <Link to="/photos">
-              <Button onClick={handleContinueClick} />
+              <Button
+                onClick={() => {
+                  handleContinueClick();
+                  handleContinue();
+                }}
+              />
             </Link>
           </span>
         </div>

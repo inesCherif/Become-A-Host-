@@ -7,12 +7,22 @@ import useActiveNav from "../../../../hooks/useActiveNav";
 import Tips from "../../../../components/tips/Tips";
 import LocationForm from "../../../../containers/location-info/LocationForm";
 
+
+import { useSelector,useDispatch } from "react-redux";
+import locationDataToFirestore from "../../../../redux/actions/step1-actions/locationDataToFirestore";
+
+
+
 const Location = () => {
+  const dispatch = useDispatch();
   const { selectedNavItem, handleContinueClick } = useActiveNav(
     "location",
     "languages"
   );
-
+  const location = useSelector(state => state.location);
+  const handleContinue = () => {
+    locationDataToFirestore(dispatch, location);
+  };
   return (
     <>
       <Navbar selectedNavItem={selectedNavItem} selectedNavStep="step1" />
@@ -30,7 +40,7 @@ const Location = () => {
 
           <span className="btn-position">
             <Link to="/languages">
-              <Button onClick={handleContinueClick} />
+              <Button onClick={() => { handleContinueClick(); handleContinue(); }}  />
             </Link>
           </span>
         </div>

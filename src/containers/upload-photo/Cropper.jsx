@@ -1,9 +1,13 @@
-import { Box, Modal, Slider, Button } from "@mui/material";
+import { Box, Modal, Slider, Button, CircularProgress } from "@mui/material";
 import "./Cropper.css";
-import { useRef, useState } from "react";
+import {useEffect, useRef, useState } from "react";
 import AvatarEditor from "react-avatar-editor";
 import { TbPhotoUp } from "react-icons/tb";
 import Profile from "../../assets/images/profile.png";
+import { auth, db, storage } from "../../firebase";
+import { sendImageToFirebase } from "../../services/uploadFile";
+
+
 
 // Styles
 const boxStyle = {
@@ -25,17 +29,21 @@ const CropperModal = ({ src, modalOpen, setModalOpen, setPreview }) => {
   const [slideValue, setSlideValue] = useState(10);
   const cropRef = useRef(null);
 
-  //handle save
+
+  const [uploadProgress, setUploadProgress] = useState(0); // Define uploadProgress state here
+
   const handleSave = async () => {
     if (cropRef) {
       const dataUrl = cropRef.current.getImage().toDataURL();
-      const result = await fetch(dataUrl);
-      const blob = await result.blob();
-      setPreview(URL.createObjectURL(blob));
+      setUploadProgress(0); // Set initial progress to 0
+      const { previewUrl, progress } = await sendImageToFirebase(
+        dataUrl,
+        setUploadProgress
+      );
+      setPreview(previewUrl);
       setModalOpen(false);
     }
   };
-
   return (
     <Modal sx={modalStyle} open={modalOpen}>
       <Box sx={boxStyle}>
@@ -48,8 +56,7 @@ const CropperModal = ({ src, modalOpen, setModalOpen, setPreview }) => {
           color={[0, 0, 0, 0.72]}
           scale={slideValue / 10}
           rotate={0}
-        />
-
+        /> 
         {/* MUI Slider */}
         <Slider
           min={10}
@@ -68,8 +75,14 @@ const CropperModal = ({ src, modalOpen, setModalOpen, setPreview }) => {
           defaultValue={slideValue}
           value={slideValue}
           onChange={(e) => setSlideValue(e.target.value)}
-        />
-
+        />{uploadProgress > 0 && (
+          // <LinearProgress
+          //   sx={{ width: "80%", margin: "10px auto",color:"red" }}
+          //   variant="determinate"
+          //   value={uploadProgress}
+          // />
+          <CircularProgress variant="determinate" sx={{maringBottom:"10px"}} value={uploadProgress} />
+        )}
         <Box
           sx={{
             display: "flex",
@@ -124,6 +137,26 @@ const Cropper = () => {
     setSrc(URL.createObjectURL(e.target.files[0]));
     setModalOpen(true);
   };
+
+  
+  useEffect(() => {
+    // Check if user is logged in
+    const user = auth.currentUser;
+    if (user) {
+      const userId = user.uid;
+      // Retrieve the download URL of the user's photo from Firestore
+      const applicationRef = db.collection("applications").doc(userId);
+      applicationRef.get().then((doc) => {
+        if (doc.exists) {
+          const data = doc.data();
+          setPreview(data.photoUrl);
+        }
+      }).catch((error) => {
+        console.log("Error getting application document:", error);
+      });
+    }
+  }, []);
+
 
   return (
     <>

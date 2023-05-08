@@ -1,15 +1,37 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Act.css";
 import Navbar from "../../../../layouts/navbar/Navbar";
 import { Link } from "react-router-dom";
 import Button from "../../../../components/button/Button";
 import useActiveNav from "../../../../hooks/useActiveNav";
 import TextArea from "../../../../components/textarea/TextArea";
-import VerticalStepper from "../../../../components/vertical-stepper/VerticalStepper"
+import VerticalStepper from "../../../../components/vertical-stepper/VerticalStepper";
+import { useDispatch, useSelector } from "react-redux";
+import descriptionToFirestore from "../../../../redux/actions/step3-actions/descriptionToFirebase";
+import durationToFirestore from "../../../../redux/actions/step3-actions/durationToFirestore";
+import { setSelectedDuration } from "../../../../redux/actions/step3-actions/experienceDuration";
+import { auth, db } from "../../../../firebase";
 
 const Act = () => {
-  const { selectedNavItem, handleContinueClick } = useActiveNav("do", "provide");
+  const { selectedNavItem, handleContinueClick } = useActiveNav(
+    "do",
+    "provide"
+  );
+  const experience = useSelector((state) => state.experience);
+  const experienceDuration = useSelector((state) => state.experienceDuration);
+  const dispatch = useDispatch();
+  const handleContinue = async () => {
+    saveToFirestore(dispatch, experience, experienceDuration);
+  };
+  const saveToFirestore = async (dispatch, experience, experienceDuration) => {
+    await descriptionToFirestore(dispatch, experience);
+    await durationToFirestore(dispatch, experienceDuration);
+  };
 
+  const selectedValue = () => {
+    const selected = document.getElementById("duration").value;
+    dispatch(setSelectedDuration(selected));
+  };
   return (
     <>
       <Navbar selectedNavItem={selectedNavItem} selectedNavStep="step3" />
@@ -60,14 +82,24 @@ const Act = () => {
             </p>
 
             <div className="select-container">
-              <label htmlFor="duration" className="select-label">Duration</label><br />
-              <select name="duration" id="duration" className="select">
-              <option value="" disabled selected hidden>2 hours</option>
+              <label htmlFor="duration" className="select-label">
+                Duration
+              </label>
+              <br />
+              <select
+                name="duration"
+                id="duration"
+                className="select"
+                onChange={selectedValue}
+              >
+                <option value="2 hours" disabled selected hidden>
+                  2 hours
+                </option>
                 <option value="2 hours">2 hours</option>
                 <option value="3 hours">3 hours</option>
                 <option value="4 hours">4 hours</option>
                 <option value="5 hours">5 hours</option>
-                <option value="other">more than 5 hours</option>
+                <option value="more than 5 hours">more than 5 hours</option>
               </select>
             </div>
 
@@ -75,18 +107,20 @@ const Act = () => {
               <span className="idea-title">Set Your experience plan</span>
               <br />
               <span className="idea-subtitle">
-              What is your experience steps
+                What is your experience steps
               </span>
             </p>
 
             <VerticalStepper />
-
-
-
           </div>
           <span className="btn-position">
             <Link to="/provide">
-              <Button onClick={handleContinueClick} />
+              <Button
+                onClick={() => {
+                  handleContinueClick();
+                  handleContinue();
+                }}
+              />
             </Link>
           </span>
         </div>

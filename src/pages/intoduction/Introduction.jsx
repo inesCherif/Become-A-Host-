@@ -27,7 +27,7 @@ const Introduction = () => {
           with the world.
         </p>
         <span className="btn">
-          <Link to="loading">
+          <Link to="/loading">
             <Button />
           </Link>
         </span>

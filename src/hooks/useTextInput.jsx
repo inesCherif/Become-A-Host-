@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { auth, db } from "../firebase";
 
 function useTextInput(maxLength) {
   const [value, setValue] = useState("");
@@ -10,7 +11,6 @@ function useTextInput(maxLength) {
       setValue(newValue);
     }
   }
-
   return {
     value,
     handleChange,
@@ -19,8 +19,6 @@ function useTextInput(maxLength) {
 }
 
 export default useTextInput;
-
-
 
 // **********************************counting words***************************************
 // function handleChange(event) {

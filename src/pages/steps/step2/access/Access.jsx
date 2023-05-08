@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./Access.css";
 import Navbar from "../../../../layouts/navbar/Navbar";
 import { Link } from "react-router-dom";
@@ -7,12 +7,45 @@ import useActiveNav from "../../../../hooks/useActiveNav";
 import Tip from "../../../../components/detailed-tips/Tip";
 import RadioGroup from "../../../../containers/radio-group/RadioGroup";
 import Radio from "../../../../components/radio/Radio";
+import { useDispatch, useSelector } from "react-redux";
+import accessDataToFirestore from "../../../../redux/actions/step2-actions/accessDataToFirestore";
+import { auth, db } from "../../../../firebase";
+import { updateAccessActivity } from "../../../../redux/actions/step2-actions/accessActions";
 
 const Access = () => {
+  const [guests_ability_to_do_activity, setGuests_ability_to_do_activity] =
+    useState();
+  const dispatch = useDispatch();
+
   const { selectedNavItem, handleContinueClick } = useActiveNav(
     "access",
     "Connection"
   );
+  const access = useSelector((state) => state.access);
+  const handleContinue = () => {
+    accessDataToFirestore(dispatch, access);
+  };
+
+  // fetch data from firebase and display it in Radio
+  useEffect(() => {
+    const fetchData = async () => {
+      const userId = auth.currentUser.uid;
+      const applicationRef = db.collection("applications").doc(userId);
+      const doc = await applicationRef.get();
+      if (doc.exists && doc.data().access) {
+        const {
+          guests_ability_to_do_activity: fetchedGuests_ability_to_do_activity,
+        } = doc.data().access;
+        if (fetchedGuests_ability_to_do_activity !== undefined) {
+          setGuests_ability_to_do_activity(
+            fetchedGuests_ability_to_do_activity
+          );
+          dispatch(updateAccessActivity(fetchedGuests_ability_to_do_activity));
+        }
+      }
+    };
+    fetchData();
+  }, []);
 
   return (
     <>
@@ -36,25 +69,53 @@ const Access = () => {
           >
             <Radio
               id="radio1"
-              value="unique"
+              value="It’s very unique—guests couldn’t do it without me"
               label="It’s very unique—guests couldn’t do it without me"
+              onChange={(e) => {
+                setGuests_ability_to_do_activity(e.target.value);
+                dispatch(updateAccessActivity(e.target.value));
+              }}
+              checked={
+                guests_ability_to_do_activity ===
+                "It’s very unique—guests couldn’t do it without me"
+              }
             />
             <Radio
               id="radio2"
-              value="perspective"
-              label="Guests could do this on their own, 
-              but I bring a unique perspective to the activity"
+              value="Guests could do this on their own, but I bring a unique perspective to the activity"
+              label="Guests could do this on their own, but I bring a unique perspective to the activity"
+              onChange={(e) => {
+                setGuests_ability_to_do_activity(e.target.value);
+                dispatch(updateAccessActivity(e.target.value));
+              }}
+              checked={
+                guests_ability_to_do_activity ===
+                "Guests could do this on their own, but I bring a unique perspective to the activity"
+              }
             />
             <Radio
               id="radio3"
-              value="without-me"
+              value="Guests could do this on their own without me"
               label="Guests could do this on their own without me"
+              onChange={(e) => {
+                setGuests_ability_to_do_activity(e.target.value);
+                dispatch(updateAccessActivity(e.target.value));
+              }}
+              checked={
+                guests_ability_to_do_activity ===
+                "Guests could do this on their own without me"
+              }
             />
           </RadioGroup>
 
           <span className="btn-position">
             <Link to="/connection">
-              <Button onClick={handleContinueClick} />
+              <Button
+                onClick={() => {
+                  handleContinueClick();
+                  handleContinue();
+                }}
+              />
             </Link>
           </span>
         </div>

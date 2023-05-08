@@ -1,0 +1,18 @@
+#logreg-forms .sign-up-btn {
+  color: white;
+  background-color: hsl(208, 92%, 39%);
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  cursor: pointer;
+  display: block;
+  margin: auto;
+}
+.sign-up-btn:hover {
+  background-color: hsl(208, 81%, 31%);
+}
+#logreg-forms .a {
+  color: rgb(81, 153, 129);
+  margin-left: 180px;
+  margin-top: 40px;
+}
