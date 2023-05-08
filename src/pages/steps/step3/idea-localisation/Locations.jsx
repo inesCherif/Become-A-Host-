@@ -48,7 +48,7 @@ const Locations = () => {
   const [showCountryText, setShowCountryText] = useState(true);
 
 
-  // fetch data from firebase and display it in Radio
+  // fetch data from firebase and display it in select
   useEffect(() => {
     const fetchData = async () => {
       const userId = auth.currentUser.uid;

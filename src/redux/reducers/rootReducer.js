@@ -13,6 +13,8 @@ import experienceDurationReducer from "./step3-reducers/experienceDurationReduce
 import provisionReducer from "./step3-reducers/provisionReducer";
 import requirementsReducer from "./step3-reducers/requirementsReducer";
 import locationsReducer from "./step3-reducers/locationsReducer";
+import groupSizeReducer from "./step4-reducers/groupSizeReducers"
+import availabilityReducer from "./step4-reducers/availibilityReducer"
 
 const rootReducer = combineReducers({
   user: userReducer,
@@ -29,6 +31,8 @@ const rootReducer = combineReducers({
   provision: provisionReducer,
   requirements: requirementsReducer,
   meetingLocation: locationsReducer,
+  groupSize:groupSizeReducer,
+  availability:availabilityReducer,
 });
 
 export default rootReducer;

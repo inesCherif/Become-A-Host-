@@ -33,7 +33,7 @@ const Pricing = () => {
       <Navbar selectedNavItem={selectedNavItem} selectedNavStep="step4" />
       <div className="desktop-content">
         <div className="content-position">
-          <h1 className="content-title">Maximum group size</h1>
+          <h1 className="content-title">Guest pricing</h1>
           <div className="tips">
             <p className="type16">
               <br />
