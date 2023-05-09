@@ -13,8 +13,10 @@ import experienceDurationReducer from "./step3-reducers/experienceDurationReduce
 import provisionReducer from "./step3-reducers/provisionReducer";
 import requirementsReducer from "./step3-reducers/requirementsReducer";
 import locationsReducer from "./step3-reducers/locationsReducer";
-import groupSizeReducer from "./step4-reducers/groupSizeReducers"
-import availabilityReducer from "./step4-reducers/availibilityReducer"
+import groupSizeReducer from "./step4-reducers/groupSizeReducers";
+import availabilityReducer from "./step4-reducers/availibilityReducer";
+import bookingReducer from "./step4-reducers/bookingReducers";
+import reviewReducer from "./step4-reducers/reviewReducer";
 
 const rootReducer = combineReducers({
   user: userReducer,
@@ -31,8 +33,10 @@ const rootReducer = combineReducers({
   provision: provisionReducer,
   requirements: requirementsReducer,
   meetingLocation: locationsReducer,
-  groupSize:groupSizeReducer,
-  availability:availabilityReducer,
+  groupSize: groupSizeReducer,
+  availability: availabilityReducer,
+  booking: bookingReducer,
+  guideLicense: reviewReducer,
 });
 
 export default rootReducer;

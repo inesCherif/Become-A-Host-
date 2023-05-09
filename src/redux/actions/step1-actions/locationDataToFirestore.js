@@ -1,5 +1,5 @@
 import { db, auth } from "../../../firebase";
-import { updateLocationInfo } from "./locationActions";
+import { updateUserAdress, updateUserCity, updateUserCountry, updateYearsOfLiving } from "./locationActions";
 
 const locationDataToFirestore = (dispatch, location) => {
   const userId = auth.currentUser.uid;
@@ -9,19 +9,15 @@ const locationDataToFirestore = (dispatch, location) => {
     location.country &&
     location.city &&
     location.years_of_living &&
-    location.adress
+    location.address 
   ) {
     applicationRef
       .set({ location }, { merge: true })
       .then(() => {
-        dispatch(
-          updateLocationInfo({
-            country: "",
-            city: "",
-            years_of_living: "",
-            adress: "",
-          })
-        );
+        dispatch(updateUserCountry({ country: "" }));
+        dispatch(updateUserCity({ city: "" }));
+        dispatch(updateYearsOfLiving({ years_of_living: "" }));
+        dispatch(updateUserAdress({ address: "" }));
       })
       .catch((error) => {
         console.error("Error writing form data to Firestore:", error);

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Review.css";
 import Navbar from "../../../../layouts/navbar/Navbar";
 import { Link } from "react-router-dom";
@@ -7,12 +7,22 @@ import Submit from "../../../../components/submit/Submit";
 import RadioGroup from "../../../../containers/radio-group/RadioGroup";
 import Radio from "../../../../components/radio/Radio";
 import Box from "../../../../components/box/Box";
+import { useDispatch, useSelector } from "react-redux";
+import { updateGuideLicense } from "../../../../redux/actions/step4-actions/reviewActions";
+import reviewDataToFirestore from "../../../../redux/actions/step4-actions/reviewDataToFirestore";
 
 const Review = () => {
+  const [guideLicense, setguideLicense] = useState();
+  const dispatch = useDispatch();
+
   const { selectedNavItem, handleContinueClick } = useActiveNav(
     "review",
     "review"
   );
+  const GuideLicense = useSelector((state) => state.guideLicense);
+  const handleContinue = () => {
+    reviewDataToFirestore(dispatch, GuideLicense);
+  };
 
   return (
     <>
@@ -58,18 +68,42 @@ const Review = () => {
               >
                 <Radio
                   id="radio1"
-                  value="unique"
+                  value="I have all necessary licenses, permits, or permissions that apply to tour guiding or tourist services."
                   label="I have all necessary licenses, permits, or permissions that apply to tour guiding or tourist services."
+                  onChange={(e) => {
+                    setguideLicense(e.target.value);
+                    dispatch(updateGuideLicense(e.target.value));
+                  }}
+                  checked={
+                    guideLicense ===
+                    "I have all necessary licenses, permits, or permissions that apply to tour guiding or tourist services."
+                  }
                 />
                 <Radio
                   id="radio2"
-                  value="perspective"
+                  value="No license, permit or permission applying to tour guiding or tourist services is required for me to operate the experience."
                   label="No license, permit or permission applying to tour guiding or tourist services is required for me to operate the experience."
+                  onChange={(e) => {
+                    setguideLicense(e.target.value);
+                    dispatch(updateGuideLicense(e.target.value));
+                  }}
+                  checked={
+                    guideLicense ===
+                    "No license, permit or permission applying to tour guiding or tourist services is required for me to operate the experience."
+                  }
                 />
                 <Radio
                   id="radio3"
-                  value="without-me"
+                  value="I do not have the necessary licenses, permits, or permissions required to conduct the experience."
                   label="I do not have the necessary licenses, permits, or permissions required to conduct the experience."
+                  onChange={(e) => {
+                    setguideLicense(e.target.value);
+                    dispatch(updateGuideLicense(e.target.value));
+                  }}
+                  checked={
+                    guideLicense ===
+                    "I do not have the necessary licenses, permits, or permissions required to conduct the experience."
+                  }
                 />
               </RadioGroup>
             </div>
@@ -107,48 +141,52 @@ const Review = () => {
             <div className="final-part">
               <div>
                 <div className="box-container">
-                <Box />
-                <div>
-                  <p className="body">
-                    My experience complies with local laws. <br /> about other
-                    laws (like business licensing) that may apply.
-                  </p>
+                  <Box />
+                  <div>
+                    <p className="body">
+                      My experience complies with local laws. <br /> about other
+                      laws (like business licensing) that may apply.
+                    </p>
+                  </div>
+                </div>
+                <div className="box-container">
+                  <Box />
+                  <div>
+                    <p className="body">
+                      I confirm that my descriptions and photos are my own,
+                      <br /> and accurately reflect my experience.
+                    </p>
+                  </div>
+                </div>
+                <div className="box-container">
+                  <Box />
+                  <div>
+                    <p className="body">
+                      I agree to the{" "}
+                      <span className="draging-photos-link">
+                        Tabaani Experiences Terms of Service
+                      </span>{" "}
+                      and <br />
+                      <span className="draging-photos-link">
+                        Guest Refund Policy.
+                      </span>
+                    </p>
+                  </div>
                 </div>
               </div>
-              <div className="box-container">
-                <Box />
-                <div>
-                  <p className="body">
-                    I confirm that my descriptions and photos are my own,
-                    <br /> and accurately reflect my experience.
-                  </p>
-                </div>
-              </div>
-              <div className="box-container">
-                <Box />
-                <div>
-                  <p className="body">
-                    I agree to the{" "}
-                    <span className="draging-photos-link">
-                      Tabaani Experiences Terms of Service
-                    </span>{" "}
-                    and <br />
-                    <span className="draging-photos-link">
-                      Guest Refund Policy.
-                    </span>
-                  </p>
-                </div>
-              </div>
-              </div>
-              
+
               <div>
                 <span className="">
-                <Link to="/review">
-                  <Submit onClick={handleContinueClick} />
-                </Link>
-              </span>
+                  <Link to="/review">
+                    <Submit
+                      onClick={() => {
+                        handleContinueClick();
+                        handleContinue();
+                      }}
+                    />
+                  </Link>
+                </span>
               </div>
-              
             </div>
           </div>
         </div>

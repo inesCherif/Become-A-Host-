@@ -1,21 +1,31 @@
 import * as types from "../../actions/actionTypes";
 
 const initialState = {
-  country: "",
-  city: "",
-  years_of_living: "",
-  adress: "",
+  // country: "",
+  // region: "",
 };
 
 const locationReducer = (state = initialState, action) => {
   switch (action.type) {
-    case types.UPDATE_LOCATION_INFO:
+    case types.UPDATE_USER_COUNTRY:
       return {
         ...state,
         country: action.payload.country,
+      };
+    case types.UPDATE_USER_CITY:
+      return {
+        ...state,
         city: action.payload.city,
+      };
+    case types.UPDATE_USER_YEARS_OG_LIVING:
+      return {
+        ...state,
         years_of_living: action.payload.years_of_living,
-        adress: action.payload.adress,
+      };
+    case types.UPDATE_USER_ADDRESS:
+      return {
+        ...state,
+        address: action.payload.address,
       };
     default:
       return state;
