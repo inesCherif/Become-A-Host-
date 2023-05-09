@@ -7,26 +7,12 @@ import useActiveNav from "../../../../hooks/useActiveNav";
 import Tips from "../../../../components/tips/Tips";
 import InputField from "../../../../components/input-field/InputField";
 import { useDispatch, useSelector } from "react-redux";
-import { updateLanguagesInfo } from "../../../../redux/actions/step1-actions/languagesActions";
+import { updateEnglishLevel, updateLanguages } from "../../../../redux/actions/step1-actions/languagesActions";
 import { auth, db } from "../../../../firebase";
 import languagesDataToFirstore from "../../../../redux/actions/step1-actions/languagesDataToFirestore";
 
 const Languages = () => {
-  const [state, setState] = useState({
-    languages: "",
-    english_level: "",
-  });
-
   const dispatch = useDispatch();
-  const { languages, english_level } = state;
-  const handleInputChange = (event) => {
-    let { name, value } = event.target;
-    setState({ ...state, [name]: value }); // update the form data in state
-
-    dispatch(updateLanguagesInfo(languages, english_level));
-  };
-
-
   const { selectedNavItem, handleContinueClick } = useActiveNav(
     "languages",
     "passions"
@@ -36,18 +22,72 @@ const Languages = () => {
     languagesDataToFirstore(dispatch, language);
   };
 
-  // fetch data from firebase and display it in inputs
+
+  const [languages, setLanguages] = useState("");
+  const [english_level, setEnglishLevel] = useState("");
+
   useEffect(() => {
     const fetchData = async () => {
       const userId = auth.currentUser.uid;
       const applicationRef = db.collection("applications").doc(userId);
       const doc = await applicationRef.get();
       if (doc.exists && doc.data().languages) {
-        setState(doc.data().languages);
+        const {
+          languages: fetchedlanguages,
+          english_level: fetchedenglish_level,
+        } = doc.data().languages;
+        if (fetchedlanguages !== undefined) {
+          setLanguages(fetchedlanguages);
+          dispatch(updateLanguages(fetchedlanguages));
+        }
+        if (fetchedenglish_level !== undefined) {
+          setEnglishLevel(fetchedenglish_level);
+          dispatch(updateEnglishLevel(fetchedenglish_level));
+        }
       }
     };
     fetchData();
   }, []);
+
+  // const [state, setState] = useState({
+  //   languages: "",
+  //   english_level: "",
+  // });
+
+  // const dispatch = useDispatch();
+  // const { languages, english_level } = state;
+  // const handleInputChange = (event) => {
+  //   let { name, value } = event.target;
+  //   setState({ ...state, [name]: value }); // update the form data in state
+
+  //   dispatch(updateLanguagesInfo(languages, english_level));
+  // };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  // fetch data from firebase and display it in inputs
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const userId = auth.currentUser.uid;
+  //     const applicationRef = db.collection("applications").doc(userId);
+  //     const doc = await applicationRef.get();
+  //     if (doc.exists && doc.data().languages) {
+  //       setState(doc.data().languages);
+  //     }
+  //   };
+  //   fetchData();
+  // }, []);
   return (
     <>
       <Navbar selectedNavItem={selectedNavItem} selectedNavStep="step1" />
@@ -71,7 +111,10 @@ const Languages = () => {
                       name="languages"
                       htmlFor="languages"
                       value={languages}
-                      onChange={handleInputChange}
+                      onChange={(e) => {
+                        setLanguages(e.target.value);
+                        dispatch(updateLanguages(e.target.value));
+                      }}
                     />
                   </td>
                 </tr>
@@ -84,7 +127,10 @@ const Languages = () => {
                       name="english_level"
                       htmlFor="english_level"
                       value={english_level}
-                      onChange={handleInputChange}
+                      onChange={(e) => {
+                        setEnglishLevel(e.target.value);
+                        dispatch(updateEnglishLevel(e.target.value));
+                      }}
                     />
                   </td>
                 </tr>

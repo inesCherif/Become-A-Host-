@@ -7,25 +7,12 @@ import useActiveNav from "../../../../hooks/useActiveNav";
 import Tips from "../../../../components/tips/Tips";
 import InputField from "../../../../components/input-field/InputField";
 import { useDispatch, useSelector } from "react-redux";
-import { updatePassionsInfo } from "../../../../redux/actions/step1-actions/updatePassionsInfo";
+import { updateFavoriteCityFeatures, updatePassions, updateSelfDescription } from "../../../../redux/actions/step1-actions/passionActions";
 import { auth, db } from "../../../../firebase";
 import passionsDataToFirestore from "../../../../redux/actions/step1-actions/passionsToFirestore";
 
 const Passions = () => {
-  const [state, setState] = useState({
-    userPassions: "",
-    myFavoriteCityFeature: "",
-    selfDescription: "",
-  });
-
   const dispatch = useDispatch();
-  const { userPassions, myFavoriteCityFeature,selfDescription } = state;
-  const handleInputChange = (event) => {
-    let { name, value } = event.target;
-    setState({ ...state, [name]: value }); // update the form data in state
-
-    dispatch(updatePassionsInfo(userPassions, myFavoriteCityFeature,selfDescription));
-  };
   const { selectedNavItem, handleContinueClick } = useActiveNav(
     "passions",
     ""
@@ -35,14 +22,33 @@ const Passions = () => {
     passionsDataToFirestore(dispatch, passions);
   };
 
-  // fetch data from firebase and display it in inputs
+  const [userPassions, setUserPassions] = useState("");
+  const [myFavoriteCityFeature, setMyFavoriteCityFeature] = useState("");
+  const [selfDescription, setSelfDescription] = useState("");
+
   useEffect(() => {
     const fetchData = async () => {
       const userId = auth.currentUser.uid;
       const applicationRef = db.collection("applications").doc(userId);
       const doc = await applicationRef.get();
       if (doc.exists && doc.data().passions) {
-        setState(doc.data().passions);
+        const {
+          userPassions: fetcheduserPassions,
+          myFavoriteCityFeature: fetchedmyFavoriteCityFeature,
+          selfDescription: fetchedselfDescription,
+        } = doc.data().passions;
+        if (fetcheduserPassions !== undefined) {
+          setUserPassions(fetcheduserPassions);
+          dispatch(updatePassions(fetcheduserPassions));
+        }
+        if (fetchedmyFavoriteCityFeature !== undefined) {
+          setMyFavoriteCityFeature(fetchedmyFavoriteCityFeature);
+          dispatch(updateFavoriteCityFeatures(fetchedmyFavoriteCityFeature));
+        }
+        if (fetchedselfDescription !== undefined) {
+          setSelfDescription(fetchedselfDescription);
+          dispatch(updateSelfDescription(fetchedselfDescription));
+        }
       }
     };
     fetchData();
@@ -70,7 +76,10 @@ const Passions = () => {
                       name="userPassions"
                       htmlFor="userPassions"
                       value={userPassions}
-                      onChange={handleInputChange}
+                      onChange={(e) => {
+                        setUserPassions(e.target.value);
+                        dispatch(updatePassions(e.target.value));
+                      }}
                     />
                   </td>
                 </tr>
@@ -83,7 +92,10 @@ const Passions = () => {
                       name="myFavoriteCityFeature"
                       htmlFor="myFavoriteCityFeature"
                       value={myFavoriteCityFeature}
-                      onChange={handleInputChange}
+                      onChange={(e) => {
+                        setMyFavoriteCityFeature(e.target.value);
+                        dispatch(updateFavoriteCityFeatures(e.target.value));
+                      }}
                     />
                   </td>
                 </tr>
@@ -100,7 +112,10 @@ const Passions = () => {
                       rows="10"
                       className="textarea-description"
                       value={selfDescription}
-                      onChange={handleInputChange}
+                      onChange={(e) => {
+                        setSelfDescription(e.target.value);
+                        dispatch(updateSelfDescription(e.target.value));
+                      }}
                     ></textarea>
                   </td>
                 </tr>

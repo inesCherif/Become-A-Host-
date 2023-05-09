@@ -1,8 +1,8 @@
 import * as types from "../../actions/actionTypes";
 
 const initialState = {
-  // country: "",
-  // region: "",
+  country: "",
+  region: "",
 };
 
 const locationReducer = (state = initialState, action) => {
@@ -17,7 +17,7 @@ const locationReducer = (state = initialState, action) => {
         ...state,
         city: action.payload.city,
       };
-    case types.UPDATE_USER_YEARS_OG_LIVING:
+    case types.UPDATE_USER_YEARS_OF_LIVING:
       return {
         ...state,
         years_of_living: action.payload.years_of_living,

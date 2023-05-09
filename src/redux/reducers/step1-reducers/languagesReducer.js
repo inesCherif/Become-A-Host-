@@ -11,11 +11,15 @@ const languagesReducer = (state = initialState, action) => {
       return {
         ...state,
         languages: action.payload.languages,
+      };
+    case types.UPDATE_ENGLISH_LEVEL:
+      return {
+        ...state,
         english_level: action.payload.english_level,
       };
     default:
       return state;
   }
 };
-
 export default languagesReducer;
+

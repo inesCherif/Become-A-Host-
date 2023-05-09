@@ -29,7 +29,7 @@ export const updateUserCity = (city) => ({
 
 
 export const updateYearsOfLiving = (years_of_living) => ({
-  type: types.UPDATE_USER_YEARS_OG_LIVING,
+  type: types.UPDATE_USER_YEARS_OF_LIVING,
   payload: {
     years_of_living,
   },

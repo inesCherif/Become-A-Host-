@@ -9,3 +9,14 @@ const userId = auth.currentUser.uid;
 import { useSelector } from 'react-redux';
 const expertise = useSelector(state => state.expertise);
 console.log(counter)
+
+
+
+
+
+
+
+
+git add .
+git commit -m "Added new feature"
+git push origin back-end
