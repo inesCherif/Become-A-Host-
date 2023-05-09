@@ -5,3 +5,10 @@ export const updateDescriptionInfo = (experienceDescription) => ({
   payload: experienceDescription,
 });
 
+
+export function setSelectedDuration(duration) {
+  return {
+    type: types.SET_SELECTED_DURATION,
+    duration,
+  };
+}

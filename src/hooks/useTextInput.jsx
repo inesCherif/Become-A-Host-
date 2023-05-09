@@ -15,6 +15,7 @@ function useTextInput(maxLength) {
     value,
     handleChange,
     remainingChars,
+    setValue
   };
 }
 

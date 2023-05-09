@@ -1,17 +1,22 @@
 import { db, auth } from "../../../firebase";
-import { updateDescriptionInfo } from "./updateDescriptionInfo";
+import { setSelectedDuration, updateDescriptionInfo } from "./experienceActions";
 
-const descriptionToFirestore = (dispatch, experience) => {
+const experienceToFirebase = (dispatch, experience) => {
   const userId = auth.currentUser.uid;
   const applicationRef = db.collection("applications").doc(userId);
 
-  if (experience.experienceDescription) {
+  if (experience.experienceDescription && experience.experienceDuration) {
     applicationRef
       .set({ experience }, { merge: true })
       .then(() => {
         dispatch(
           updateDescriptionInfo({
             experienceDescription: "",
+          })
+        );
+        dispatch(
+          setSelectedDuration({
+            experienceDuration: "2 hours",
           })
         );
       })
@@ -23,4 +28,4 @@ const descriptionToFirestore = (dispatch, experience) => {
   }
 };
 
-export default descriptionToFirestore;
+export default experienceToFirebase;

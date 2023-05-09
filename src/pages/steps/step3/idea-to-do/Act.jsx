@@ -7,9 +7,8 @@ import useActiveNav from "../../../../hooks/useActiveNav";
 import TextArea from "../../../../components/textarea/TextArea";
 import VerticalStepper from "../../../../components/vertical-stepper/VerticalStepper";
 import { useDispatch, useSelector } from "react-redux";
-import descriptionToFirestore from "../../../../redux/actions/step3-actions/descriptionToFirebase";
-import durationToFirestore from "../../../../redux/actions/step3-actions/durationToFirestore";
-import { setSelectedDuration } from "../../../../redux/actions/step3-actions/experienceDuration";
+import experienceToFirebase from "../../../../redux/actions/step3-actions/experienceToFirebase";
+import { setSelectedDuration } from "../../../../redux/actions/step3-actions/experienceActions";
 import { auth, db } from "../../../../firebase";
 
 const Act = () => {
@@ -18,20 +17,36 @@ const Act = () => {
     "provide"
   );
   const experience = useSelector((state) => state.experience);
-  const experienceDuration = useSelector((state) => state.experienceDuration);
   const dispatch = useDispatch();
-  const handleContinue = async () => {
-    saveToFirestore(dispatch, experience, experienceDuration);
-  };
-  const saveToFirestore = async (dispatch, experience, experienceDuration) => {
-    await descriptionToFirestore(dispatch, experience);
-    await durationToFirestore(dispatch, experienceDuration);
+  const handleContinue = () => {
+    experienceToFirebase(dispatch, experience);
   };
 
-  const selectedValue = () => {
-    const selected = document.getElementById("duration").value;
-    dispatch(setSelectedDuration(selected));
+  const [experienceDuration, setExperienceDuration] = useState("");
+
+  const selectedDuration = () => {
+    const Selected = document.getElementById("duration").value;
+    setExperienceDuration(Selected);
+    dispatch(setSelectedDuration(Selected));
   };
+  // fetch data from firebase and display it in select
+  useEffect(() => {
+    const fetchData = async () => {
+      const userId = auth.currentUser.uid;
+      const applicationRef = db.collection("applications").doc(userId);
+      const doc = await applicationRef.get();
+      if (doc.exists && doc.data().experience) {
+        const {
+          experienceDuration: fetchedExperienceDuration,
+        } = doc.data().experience;
+        if (fetchedExperienceDuration !== undefined) {
+          setExperienceDuration(fetchedExperienceDuration);
+          dispatch(setSelectedDuration(fetchedExperienceDuration));
+        }
+      }
+    };
+    fetchData();
+  }, []);
   return (
     <>
       <Navbar selectedNavItem={selectedNavItem} selectedNavStep="step3" />
@@ -90,16 +105,16 @@ const Act = () => {
                 name="duration"
                 id="duration"
                 className="select"
-                onChange={selectedValue}
+                onChange={selectedDuration}
               >
                 <option value="2 hours" disabled selected hidden>
                   2 hours
                 </option>
-                <option value="2 hours">2 hours</option>
-                <option value="3 hours">3 hours</option>
-                <option value="4 hours">4 hours</option>
-                <option value="5 hours">5 hours</option>
-                <option value="more than 5 hours">more than 5 hours</option>
+                <option value="2 hours" selected={experienceDuration === "2 hours"}>2 hours</option>
+                <option value="3 hours" selected={experienceDuration === "3 hours"}>3 hours</option>
+                <option value="4 hours"selected={experienceDuration === "4 hours"}>4 hours</option>
+                <option value="5 hours"selected={experienceDuration === "5 hours"}>5 hours</option>
+                <option value="more than 5 hours" selected={experienceDuration === "more than 5 hours"}>more than 5 hours</option>
               </select>
             </div>
 

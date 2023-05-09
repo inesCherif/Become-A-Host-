@@ -8,8 +8,7 @@ import expertiseReducer from "./step2-reducers/expertiseReducer";
 import accessReducer from "./step2-reducers/accessReducer";
 import ConnectionReducer from "./step2-reducers/connectionReducer";
 import titleReducer from "./step3-reducers/titleReducers";
-import descriptionReducer from "./step3-reducers/descriptionReducer";
-import experienceDurationReducer from "./step3-reducers/experienceDurationReducer";
+import experienceReducer from "./step3-reducers/experienceReducer";
 import provisionReducer from "./step3-reducers/provisionReducer";
 import requirementsReducer from "./step3-reducers/requirementsReducer";
 import locationsReducer from "./step3-reducers/locationsReducer";
@@ -28,8 +27,7 @@ const rootReducer = combineReducers({
   access: accessReducer,
   connection: ConnectionReducer,
   title: titleReducer,
-  experience: descriptionReducer,
-  experienceDuration: experienceDurationReducer,
+  experience: experienceReducer,
   provision: provisionReducer,
   requirements: requirementsReducer,
   meetingLocation: locationsReducer,
